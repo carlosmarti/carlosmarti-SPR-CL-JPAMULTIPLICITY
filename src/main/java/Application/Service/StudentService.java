@@ -59,6 +59,14 @@ public class StudentService {
      */
     public void assignClassroomToStudent(long studentId, Classroom classroom){
 
+        Student student;
+        Optional<Student> returnedStudent = studentRepository.findById(studentId);
+
+        if(returnedStudent.isPresent()){
+            student = returnedStudent.get();
+            student.setClassroom(classroom);
+            studentRepository.save(student);
+        }
     }
 
     /**
@@ -69,7 +77,15 @@ public class StudentService {
      * @return the Classroom of the student
      */
     public Classroom getClassroomOfStudent(long studentId){
-        return null;
+
+        
+        Student student = new Student();
+        Optional<Student> returnedStudent = studentRepository.findById(studentId);
+
+        if(returnedStudent.isPresent()){
+            student = returnedStudent.get();
+        }
+        return student.getClassroom();
     }
 
     /**
@@ -80,5 +96,14 @@ public class StudentService {
      */
     public void unassignClassroomOfStudent(long studentId){
 
+        
+        Student student;
+        Optional<Student> returnedStudent = studentRepository.findById(studentId);
+
+        if(returnedStudent.isPresent()){
+            student = returnedStudent.get();
+            student.setClassroom(null);
+            studentRepository.save(student);
+        }
     }
 }
